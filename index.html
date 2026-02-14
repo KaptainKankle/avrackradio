@@ -1,15 +1,54 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>AvRack Radio :: Mixed Music</title>
     <style>
-        body { background: #121212; color: white; font-family: sans-serif; text-align: center; padding-top: 50px; }
-        h1 { color: #00ff00; }
+        body { background: #121212; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding: 40px 20px; }
+        h1 { color: #ffcc00; margin-bottom: 10px; }
+        .container { max-width: 500px; margin: 0 auto; background: #1e1e1e; padding: 30px; border-radius: 15px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .stream-box { margin-bottom: 30px; padding: 15px; border-bottom: 1px solid #333; }
+        .stream-box:last-child { border-bottom: none; }
+        p { margin: 5px 0 15px; font-size: 0.9em; color: #aaa; }
+        audio { width: 100%; height: 40px; border-radius: 5px; }
+        .status-badge { display: inline-block; padding: 4px 12px; background: #28a745; color: white; border-radius: 20px; font-size: 0.8em; margin-bottom: 20px; }
     </style>
 </head>
 <body>
-    <h1>AvRack Radio :: Mixed Music</h1>
-    <p>Internet Radio Broadcast - Coming Soon</p>
-    <hr>
-    <p>We are currently rebuilding our home. Stay tuned!</p>
+
+    <div class="container">
+        <h1>AvRack Radio</h1>
+        <div class="status-badge">LIVE ON AIR</div>
+        <p>A to Z in Music Genre</p>
+
+        <!-- Broadband Stream (256Kbps AAC) -->
+        <div class="stream-box">
+            <strong>Broadband (High Quality)</strong>
+            <p>256Kbps AAC :: /high</p>
+            <audio id="highPlayer" controls preload="none">
+                <source src="http://avrack.servemp3.com" type="audio/aac">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+
+        <!-- Mobile Stream (64Kbps AAC+) -->
+        <div class="stream-box">
+            <strong>Mobile / Low Bandwidth</strong>
+            <p>64Kbps AAC+ :: /mobile</p>
+            <audio id="mobilePlayer" controls preload="none">
+                <source src="http://avrack.servemp3.com" type="audio/aac">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+
+    <script>
+        // Only allow one stream to play at a time to save your bandwidth
+        const high = document.getElementById('highPlayer');
+        const mobile = document.getElementById('mobilePlayer');
+
+        high.onplay = () => mobile.pause();
+        mobile.onplay = () => high.pause();
+    </script>
 </body>
 </html>
